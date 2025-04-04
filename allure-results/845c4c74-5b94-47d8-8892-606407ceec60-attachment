@@ -1,0 +1,92 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Test de connexion et gestion des erreurs
+- Location: /home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/e2e/login-error.spec.ts:3:5
+
+# Error details
+
+```
+Error: Timed out 5000ms waiting for expect(locator).toHaveURL(expected)
+
+Locator: locator(':root')
+Expected string: "http://localhost:4200/login"
+Received string: "http://localhost:4200/home"
+Call log:
+  - expect.toHaveURL with timeout 5000ms
+  - waiting for locator(':root')
+    9 × locator resolved to <html lang="en">…</html>
+      - unexpected value "http://localhost:4200/home"
+
+    at body (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/e2e/login-error.spec.ts:27:26)
+    at body (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-js-commons/src/facade.ts:113:48)
+    at call (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:13:56)
+    at tryCatch (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator._invoke (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator.next (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at asyncGeneratorStep (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at _next (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at /home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1
+    at /home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1
+    at call (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:13:23)
+    at tryCatch (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator._invoke (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator.next (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at asyncGeneratorStep (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at _next (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at /home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1
+    at AllurePlaywrightTestRuntime.apply (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at AllurePlaywrightTestRuntime.step (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-playwright/src/runtime.ts:14:4)
+    at callRuntimeMethod (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-js-commons/src/facade.ts:21:27)
+    at Object.step (/home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/node_modules/allure-js-commons/src/facade.ts:113:10)
+    at /home/niko/Documents/PROJECTS/Test d'intégration/test-playwright/e2e/login-error.spec.ts:26:18
+```
+
+# Page snapshot
+
+```yaml
+- heading "Bienvenue sur votre tableau de bord" [level=1]
+- paragraph: Vous êtes maintenant connecté à votre application Angular !
+```
+
+# Test source
+
+```ts
+   1 | import { test, expect } from '@playwright/test';
+   2 | import * as allure from "allure-js-commons";
+   3 | test('Test de connexion et gestion des erreurs', async ({ page }) => {
+   4 |     allure.allureId('10');
+   5 |     allure.description('maloto')
+   6 |     await allure.step('Aller sur la page de login', async () => {
+   7 |       await page.goto('http://localhost:4200/login');
+   8 |     });
+   9 |   
+  10 |     await allure.step('Saisir un mauvais nom d’utilisateur et mot de passe', async () => {
+  11 |       await page.fill('input[name="username"]', 'admin');
+  12 |       await page.fill('input[name="password"]', 'admin');
+  13 |     });
+  14 |   
+  15 |     await allure.step('Cliquer sur le bouton de connexion', async () => {
+  16 |       await page.click('button[type="submit"]');
+  17 |     });
+  18 |   
+  19 |     await allure.step('Vérifier le message d’erreur via le dialog', async () => {
+  20 |       page.once('dialog', async (dialog) => {
+  21 |         expect(dialog.message()).toBe("Nom d'utilisateur ou mot de passe incorrect");
+  22 |         await dialog.dismiss();
+  23 |       });
+  24 |     });
+  25 |   
+  26 |     await allure.step('Vérifier que l’URL reste sur la page de login', async () => {
+> 27 |       await expect(page).toHaveURL('http://localhost:4200/login');
+     |                          ^ Error: Timed out 5000ms waiting for expect(locator).toHaveURL(expected)
+  28 |     });
+  29 |   });
+  30 |   
+  31 |
+```
