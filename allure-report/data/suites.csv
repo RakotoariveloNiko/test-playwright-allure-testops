@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","173","Vérification du tableau de bord (Home)","chromium","Fri Apr 04 10:04:31 CEST 2025","passed","Fri Apr 04 10:04:31 CEST 2025","Tests E2E - Application Angular","app.spec.ts","",""
+"","310","Vérification du tableau de bord (Home)","firefox","Fri Apr 04 10:04:32 CEST 2025","passed","Fri Apr 04 10:04:32 CEST 2025","Tests E2E - Application Angular","app.spec.ts","",""
+"","309","Connexion avec un utilisateur valide","chromium","Fri Apr 04 10:04:30 CEST 2025","passed","Fri Apr 04 10:04:31 CEST 2025","Tests E2E - Application Angular","app.spec.ts","",""
+"","1061","Connexion avec un utilisateur valide","firefox","Fri Apr 04 10:04:30 CEST 2025","passed","Fri Apr 04 10:04:31 CEST 2025","Tests E2E - Application Angular","app.spec.ts","",""
