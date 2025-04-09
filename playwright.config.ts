@@ -10,6 +10,10 @@ export default defineConfig({
     actionTimeout: 5000,
   },
   reporter: [['list'], ['html'], ['allure-playwright']],
+  webServer: {
+    command: 'ng serve',
+    url: 'http://localhost:4200',
+  },
   projects: [
     {
       name: 'chromium',
